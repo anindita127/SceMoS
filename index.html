@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SceMoS</title>
+  <link rel="stylesheet" href="style.css">
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="container">
+      <div class="logos-container">
+        <a href="https://www.dfki.de/web/forschung/forschungsbereiche/agenten-und-simulierte-realitaet/" target="_blank" rel="noopener noreferrer"><img src="assets/DFKI_logo.png" alt="DFKI Logo"></a>
+        <a href="https://www.mpi-inf.mpg.de/home" target="_blank" rel="noopener noreferrer"><img src="assets/MPI_logo.png" alt="MPI Logo"></a>
+        <a href="https://saarland-informatics-campus.de/en/" target="_blank" rel="noopener noreferrer"><img src="assets/SIC.webp" alt="SIC Logo"></a>
+      </div>
+      <h1>SceMoS: Scene-Aware 3D Human Motion Synthesis by Planning with Geometry-Grounded Tokens</h1>
+      
+      <p class="authors">
+          <a href="https://anindita127.github.io/">Anindita Ghosh</a><sup>1,2,3</sup>,
+          <a href="https://people.mpi-inf.mpg.de/~golyanik/">Vladislav Golyanik</a><sup>2,3</sup>, 
+          <a href="https://i.cs.hku.hk/~taku/">Taku Komura</a><sup>4</sup>, 
+          <a href="https://graphics.cg.uni-saarland.de/people/slusallek.html">Philipp Slusallek</a><sup>1,3</sup>, 
+          <br> <a href="https://people.mpi-inf.mpg.de/~theobalt/">Christian Theobalt</a><sup>2,3</sup>,
+          <a href="https://rishabhdabral.github.io/">Rishabh Dabral</a><sup>2,3</sup><br> <br> 
+          
+          <sup>1</sup>German Research Center for Artificial Intelligence (DFKI),  
+          <br><sup>2</sup>Max Planck Institute for Informatics,  
+          <br><sup>3</sup>Saarland Informatics Campus,  
+          <br><sup>4</sup>University of Hong Kong
+          
+    </p>
+
+    <br>
+    <p class="announcement">This work is accepted at CVPR 2026.</p>
+
+
+    <p align="center">
+      <a href=''>
+        <img src='https://img.shields.io/badge/Arxiv-Pdf-A42C25?style=flat&logo=arXiv&logoColor=white'></a>
+      <a href='#citation'>
+        <img src='https://img.shields.io/badge/BibTex-Citation-green?style=flat&logo=latex&logoColor=white'></a>  
+    </p>
+
+    
+    <img src="assets/teaser_template.jpg" alt="Project Teaser" width="60%" height="auto" class="teaser">
+    <p class="caption"><small>SceMoS uses 2D scene cues and text instructions to generate physically consistent and realistic 3D motions.</small></p>
+
+    <h2>Abstract</h2>
+    <div style="text-align: justify; font-size: 0.7em;">
+      Synthesizing text-driven 3D human motion within realistic scenes requires learning both semantic intent (“walk to the
+      couch”) and physical feasibility (e.g., avoiding collisions).
+      Current methods use generative frameworks that simultaneously learn high-level planning and low-level contact reasoning, and rely on computationally expensive 3D scene
+      data such as point clouds or voxel occupancy grids. We propose SceMoS, a scene-aware motion synthesis framework that shows that structured 2D scene representations
+      can serve as a powerful alternative to full 3D supervision in physically grounded motion synthesis. SceMoS disentangles global planning from local execution using lightweight
+      2D cues and relying on (1) a text-conditioned autoregressive global motion planner that operates on a 
+      bird’s-eye-view (BEV) image of the scene taken from an elevated corner, encoded with DINOv2 features, as the scene representation, and (2) a
+      geometry-grounded motion tokenizer trained via a conditional VQ-VAE, that uses 2D local scene heightmap, thus
+      embedding surface physics directly into a discrete vocabulary. This 2D factorization reaches an efficiency-fidelity
+      trade-off: BEV semantics capture spatial layout and affordance for global reasoning, while local heightmaps enforce
+      fine-grained physical adherence without full 3D volumetric reasoning. SceMoS achieves state-of-the-art motion realism
+      and contact accuracy on the TRUMANS benchmark, reducing the number of trainable parameters for scene encoding by over 50%, showing that 2D scene cues can effectively ground 3D human-scene interaction. 
+    </div>
+        
+
+    <h2>Approach</h2>
+    <img src="assets/method.jpg" alt="Our training architecture" class="teaser">
+    <p class="caption"><b>Overview of SceMoS Framework. </b>
+      SceMoS disentangles text-conditioned scene-aware human motion synthesis into two stages. 
+      (a) The global motion planner predicts discrete motion tokens from text input and DINOv2 scene features extracted from a BEV image. 
+      (b) Our geometry-grounded motion tokenizer learns a scene-aware motion vocabulary for mapping these discrete tokens to a continuous 3D human motion. 
+      We use 2D local heightmaps around poses to condition our interaction decoder (top right) for fine-grained interaction generation. 
+      The red dotted line implies used only during training. Blue arrows follow through the inference pipeline.
+    </p>
+    
+
+
+    <h2>✨ Results ✨</h2>
+      <div class="results-container">
+        <div class="result-item">
+          <div class="prompt-label"><b>Input Text Prompt:</b> <br> "Sit on the small sofa."</div>
+          <video controls autoplay loop muted class="result-vid">
+            <source src="assets/video_1-sit.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="result-item">
+          <div class="prompt-label"><b>Input Text Prompt:</b> <br>"Pickup something from the table."</div>
+          <video controls autoplay loop muted class="result-vid">
+            <source src="assets/video_2-pickup.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="result-item">
+          <div class="prompt-label"><b>Input Text Prompt:</b> <br>"Walk to the table."</div>
+          <video controls autoplay loop muted class="result-vid">
+            <source src="assets/video_3-walk.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="result-item">
+          <div class="prompt-label"><b>Input Text Prompt:</b> <br>"Sit on the chair."</div>
+          <video controls autoplay loop muted class="result-vid">
+            <source src="assets/video_4-sit.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+    <h2 id="citation">BibTex</h2>
+    <pre>
+@InProceedings{ghosh2026scemos,
+  title={SceMoS: Scene-Aware 3D Human Motion Synthesis by Planning with Geometry-Grounded Tokens},
+  author={Ghosh, Anindita and Golyanik, Vladislav and Komura, Taku and Slusallek,
+     Philipp and Theobalt, Christian and Dabral, Rishabh},
+  journal={arXiv preprint arXiv:26xx.xxxxx},
+  year={2026}
+}
+    </pre>
+
+    
+   
+    <footer>
+        <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+
+            Website source code based on the Nerfies <a href="https://nerfies.github.io/">project page</a>. If you want to reuse their source code, please credit them appropriately.
+          </p>
+    </footer>
+  </div>
+</body>
+</html>
