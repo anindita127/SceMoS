@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: 'League Spartan', sans-serif;
   margin: 0;
   background-color: #fefefe;
   color: #111;
@@ -69,21 +69,26 @@ a:hover {
    ========================================= */
 .logos-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-  flex-wrap: wrap;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 20px;
-  gap: 20px;
+  justify-content: center; /* Centers them in the middle */
+  align-items: center;     /* Aligns them vertically */
+  gap: 40px;               /* Adds generous space between logos */
+  padding: 20px 0;
+  margin-bottom: 30px;
+  flex-wrap: wrap;         /* Allows wrapping on tiny screens */
 }
 
 .logos-container img {
-  height: clamp(30px, 5vw, 50px);
-  max-width: 150px;
-  object-fit: contain;
+  height: 70px;            /* Fixed height makes them look uniform */
+  width: auto;             /* Width adjusts automatically to keep aspect ratio */
+  max-width: 100%;         /* Prevents them from overflowing on mobile */
+  object-fit: contain;     /* Ensures they are never squashed/stretched */
+  opacity: 0.9;            /* Slight transparency blends them better */
+  transition: opacity 0.3s ease;
 }
 
+.logos-container img:hover {
+  opacity: 1;              /* Full brightness on hover */
+}
 .authors {
   text-align: center;
   color: #000205;
