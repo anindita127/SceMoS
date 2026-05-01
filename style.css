@@ -142,6 +142,14 @@ video {
   margin: 2rem 0;
 }
 
+.overview-video {
+  display: block;
+  width: 60%;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto 2rem auto;
+}
+
 /* =========================================
    6. Results Grid (Cards)
    ========================================= */
@@ -222,6 +230,10 @@ footer a {
   }
 
   .teaser {
+    width: 100%;
+  }
+
+  .overview-video {
     width: 100%;
   }
 
